@@ -16,15 +16,17 @@ describe('destructuring function parameters', () => {
     it('multiple params from array/object', () => {
       const fn = ([{name}]) => {
         assert.equal(name, 'Alice');
+
+        const users = [{name: 'nobody'}, {name: 'Alice', id: 42}];
+        fn(users);
       };
-      const users = [{name: 'nobody'}, {name: 'Alice', id: 42}];
-      fn(users);
+      
     });
   });
 
   describe('default values', () => {
     it('for simple values', () => {
-      const fn = (id, name='Bobby') => {
+      const fn = (id, name='Bob') => {
         assert.strictEqual(id, 23);
         assert.strictEqual(name, 'Bob');
       };
@@ -33,7 +35,7 @@ describe('destructuring function parameters', () => {
     
     it('for a missing array value', () => {
       const defaultUser = {id: 23, name: 'Joe'};
-      const fn = ([user]) => {
+      const fn = ([user=defaultUser) => {
         assert.deepEqual(user, defaultUser);
       };
       fn([]);
@@ -45,7 +47,7 @@ describe('destructuring function parameters', () => {
         assert.equal(arr, 2);
         assert.equal(obj, 3);
       };
-      fn(void 0, [], {});
+      fn(1, [2], {obj:3});
     });
   });
 
